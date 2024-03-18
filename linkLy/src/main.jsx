@@ -4,7 +4,11 @@ import MainPage from './MainPage';
 
 
 function AppLayout(){
-  return (<MainPage/>);
+  return (
+    <div className='w-screen h-screen bg-[#0B101B]'>
+      <MainPage/>
+    </div>
+  );
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(

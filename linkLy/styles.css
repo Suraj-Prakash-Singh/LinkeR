@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.navHeading{
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent;
+    background: radial-gradient(50% 50% at 50% 50%, rgb(235, 86, 142) 0%, rgb(20, 78, 227) 100%);
+    background-clip: text;
+    color: transparent;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 45.4px;
+    white-space: nowrap;
+}
