@@ -11,7 +11,7 @@ const MainPage = () => {
                     >Shorten Your Loooong Links :)</p>
                 <p className="text-[#C9CED6] text-center">Linker is an efficient and easy-to-use URL shortening service that streamlines your <br />online experience.</p>
             </div>
-            <InputBox/>
+            <InputBox width={"2/5"}/>
         </div>
         
     )
