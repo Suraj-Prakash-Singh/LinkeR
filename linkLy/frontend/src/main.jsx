@@ -6,7 +6,7 @@ import LoggedIn from './LoggedInPage/LoggedIn';
 
 function AppLayout(){
   return (
-    <div className='w-screen h-screen bg-[#0B101B]'>
+    <div className='w-screen h-max bg-[#0B101B]'>
       <LoggedIn/>
     </div>
   );
