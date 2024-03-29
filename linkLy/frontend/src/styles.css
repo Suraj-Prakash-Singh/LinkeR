@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .navHeading{
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent;
