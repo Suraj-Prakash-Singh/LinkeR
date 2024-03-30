@@ -2,6 +2,8 @@ import { useMemo } from "react";
 import copy from "../assets/copy.svg";
 import active from "../assets/active.svg";
 import inactive from "../assets/inactive.svg";
+import editIcon from "../assets/edit.svg";
+import deleteIcon from "../assets/delete.svg";
 
 import {
     flexRender,
@@ -59,6 +61,19 @@ const DataTable = () => {
         },
         {
             header: 'Action',
+            cell :({ row }) => {
+
+                return (
+                    <div className="flex gap-2">
+                        <div className="rounded-full bg-[#353C4A] border border-[1px solid #353C4A] cursor-pointer">
+                            <img className="p-2" src={editIcon}></img>
+                        </div>
+                        <div className="rounded-full bg-[#353C4A] border border-[1px solid #353C4A] cursor-pointer">
+                            <img className="p-2" src={deleteIcon}></img>
+                        </div>
+                    </div>
+                )
+            }
         },
     ], []);
     
@@ -72,13 +87,13 @@ const DataTable = () => {
         <div className="w-full h-full flex items-center justify-center bg-[#151A24] shadow-md">
             <div className="table-container w-full h-max flex justify-center items-center">
                 <div className="rounded-md w-10/12 h-max mt-10">
-                    <Table className="text-white border-none shadow-md">
+                    <Table className="border-none shadow-md">
                         <TableHeader className="bg-[#0D1117]">
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow className="border-none" key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
                                 return (
-                                <TableHead key={header.id}>
+                                <TableHead className="font-bold text-white" key={header.id}>
                                     {header.isPlaceholder
                                     ? null
                                     : flexRender(

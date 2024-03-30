@@ -2,12 +2,13 @@ import InputBox from "../InputBox";
 import DataTable from "./DataTable";
 import chevronDown from "../assets/chevron-down.svg"
 import bell from "../assets/bell.svg";
+import NavMenu from "./NavMenu";
 
 const LoggedIn = () => {
 
     return (
         <div className="w-full h-full flex flex-col justify-center">
-            <div className="w-full h-1/4">
+            <div className="w-full h-1/4 pb-10">
                 <div className="w-full h-auto flex mt-4 items-center gap-5">
                     <h2 className="navHeading p-2 cursor-pointer items-center justify-center w-2/12 ml-3">
                     LinkeR</h2>
@@ -29,7 +30,9 @@ const LoggedIn = () => {
                         </button>
                     </div>
                 </div>
+                
             </div>
+            <NavMenu></NavMenu>
             <div className="w-full h-3/4 bg-[#151A24] flex items-center justify-center">
                 <DataTable></DataTable>
             </div>
