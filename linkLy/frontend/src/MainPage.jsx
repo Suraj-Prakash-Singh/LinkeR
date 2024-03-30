@@ -4,7 +4,7 @@ import InputBox from "./InputBox";
 const MainPage = () => {
 
     return(
-        <div className="w-full h-full flex flex-col">
+        <div className="w-screen h-screen flex flex-col">
             <NavBar/>
             <div className="w-full h-2/4 flex items-center justify-center gap-5 flex-col text-center mt-4">
                 <p className="text-6xl p-3 text-transparent bg-clip-text bg-gradient-to-r  from-[#1F89DB] via-[#EB568E] to-[#144EE3] font-[#SF Pro Display] font-bold"
