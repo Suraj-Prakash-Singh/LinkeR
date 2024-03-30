@@ -1,5 +1,8 @@
 import { useMemo } from "react";
 import copy from "../assets/copy.svg";
+import active from "../assets/active.svg";
+import inactive from "../assets/inactive.svg";
+
 import {
     flexRender,
     getCoreRowModel,
@@ -16,6 +19,17 @@ import {
   } from "@/components/ui/table"
 import { data }from "./tabledata.js";
 
+const ReturnActiveIcons = ({ activeStatus }) => {
+    const bgColor = activeStatus ? "bg-[#15803d]" : "bg-[#854d0e]";
+    const imgSource = activeStatus ? active : inactive;
+    return (
+        <div className={`rounded-full flex items-center justify-center ${bgColor}`}>
+            <img src={imgSource} className={`cursor-pointer p-2 w-8 h-8`}></img>
+        </div>
+
+    )
+}
+
 const DataTable = () => {
     
     const columns =  useMemo(() => [
@@ -30,10 +44,21 @@ const DataTable = () => {
         {
             accessorKey: 'activeStatus',
             header: 'Status',
+            cell: ({ row }) => {
+                const val = row.getValue('activeStatus');
+                const textColor = val ? "text-[#1EB036]" : "text-[#B0901E]"
+                return <div className="flex items-center justify-between gap-5">
+                            <p className={`w-12 flex items-start ${textColor}`}>{val  ? "Active" : "Inactive"}</p>
+                            <ReturnActiveIcons activeStatus={val}/>
+                        </div>
+            }
         },
         {
             accessorKey: 'date',
             header: 'Date',
+        },
+        {
+            header: 'Action',
         },
     ], []);
     
@@ -74,9 +99,12 @@ const DataTable = () => {
                                 data-state={row.getIsSelected() && "selected"}
                             >
                                 {row.getVisibleCells().map((cell, index) => (
-                                <TableCell className="py-4 px-2" key={cell.id}>
-                                    <div className="flex text-xs">
-                                    {flexRender (cell.column.columnDef.cell, cell.getContext(), )}{index == 0 && <img className="cursor-pointer ml-4"src={copy}></img>}
+                                <TableCell className="py-5 px-2 text-center" key={cell.id}>
+                                    <div className="flex text-xs items-center">
+                                    {flexRender (cell.column.columnDef.cell, cell.getContext(), )}{index == 0 && 
+                                        <div className="rounded-full object-cover bg-[#1C283F] flex items-center justify-center ml-4">
+                                            <img className="cursor-pointer p-2"src={copy}></img>
+                                            </div>}
                                     </div>
                                     
                                 </TableCell>
