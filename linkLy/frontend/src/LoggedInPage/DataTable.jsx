@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import copy from "../assets/copy.svg";
 import active from "../assets/active.svg";
 import inactive from "../assets/inactive.svg";
@@ -19,7 +19,7 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-import { data }from "./tabledata.js";
+import { dataArray }from "./tabledata.js";
 
 const ReturnActiveIcons = ({ activeStatus }) => {
     const bgColor = activeStatus ? "bg-[#15803d]" : "bg-[#854d0e]";
@@ -32,8 +32,20 @@ const ReturnActiveIcons = ({ activeStatus }) => {
     )
 }
 
+
+
 const DataTable = () => {
+
+    const [data, setData] = useState(dataArray);
     
+    function handleRowDelete(indexToRemove){
+        setData(prevData => {
+            const newData = [...prevData];
+            newData.splice(indexToRemove, 1);
+            return newData;
+        });
+    }
+
     const columns =  useMemo(() => [
         {
             accessorKey: 'shortLink',
@@ -62,14 +74,14 @@ const DataTable = () => {
         {
             header: 'Action',
             cell :({ row }) => {
-
+                // console.log(row);
                 return (
                     <div className="flex gap-2">
                         <div className="rounded-full bg-[#353C4A] border border-[1px solid #353C4A] cursor-pointer">
                             <img className="p-2" src={editIcon}></img>
                         </div>
                         <div className="rounded-full bg-[#353C4A] border border-[1px solid #353C4A] cursor-pointer">
-                            <img className="p-2" src={deleteIcon}></img>
+                            <img className="p-2" src={deleteIcon} onClick={() => handleRowDelete(row.index)}></img>
                         </div>
                     </div>
                 )
@@ -84,7 +96,7 @@ const DataTable = () => {
     })
     
     return (
-        <div className="w-full h-full flex items-center justify-center bg-[#151A24] shadow-md">
+        <div className="w-full min-h-screen flex justify-center bg-[#151A24] shadow-md">
             <div className="table-container w-full h-max flex justify-center items-center">
                 <div className="rounded-md w-10/12 h-max mt-10">
                     <Table className="border-none shadow-md">

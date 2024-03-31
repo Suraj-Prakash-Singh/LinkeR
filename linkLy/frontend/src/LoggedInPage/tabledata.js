@@ -1,4 +1,4 @@
-export const data = [
+export const dataArray = [
     {
         shortLink: "https://linkly.com/Bn41aCOlnxj",
         originalLink: "https://www.twitter.com/tweets/8erelCoihu/",
