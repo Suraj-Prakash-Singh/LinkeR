@@ -4,14 +4,16 @@ import active from "../assets/active.svg";
 import inactive from "../assets/inactive.svg";
 import editIcon from "../assets/edit.svg";
 import deleteIcon from "../assets/delete.svg";
-
+import { ChevronDown, ChevronUp } from "lucide-react";
+import moment from "moment";
 import {
     flexRender,
     getCoreRowModel,
     useReactTable,
+    getSortedRowModel
   } from "@tanstack/react-table"
    
-  import {
+import {
     Table,
     TableBody,
     TableCell,
@@ -20,6 +22,7 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import { dataArray }from "./tabledata.js";
+import TableActions from "./TableActions";
 
 const ReturnActiveIcons = ({ activeStatus }) => {
     const bgColor = activeStatus ? "bg-[#15803d]" : "bg-[#854d0e]";
@@ -33,10 +36,10 @@ const ReturnActiveIcons = ({ activeStatus }) => {
 }
 
 
-
 const DataTable = () => {
 
     const [data, setData] = useState(dataArray);
+    const [sorting, setSorting] = useState([]);
     
     function handleRowDelete(indexToRemove){
         setData(prevData => {
@@ -46,6 +49,9 @@ const DataTable = () => {
         });
     }
 
+    function handleDateSorting(){
+        console.log("dateSorting clicked")
+    }
     const columns =  useMemo(() => [
         {
             accessorKey: 'shortLink',
@@ -69,7 +75,28 @@ const DataTable = () => {
         },
         {
             accessorKey: 'date',
-            header: 'Date',
+            header: ({column}) => {
+                return (
+                    <div className="flex items-center justify-start gap-2 w-full h-full">
+                        <h2>Date</h2>
+                        <ChevronDown className="cursor-pointer" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}/>
+                    </div>
+                )
+            },
+            sortingFn: (rowA, rowB, columnId) => {
+
+                const date1 = moment(rowA.original.date);
+                const date2 = moment(rowB.original.date);
+
+                const diffInDays = date2.diff(date1, 'days');
+                if (diffInDays > 0) {
+                    return -1;
+                } else if (diffInDays < 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            },
         },
         {
             header: 'Action',
@@ -77,10 +104,10 @@ const DataTable = () => {
                 // console.log(row);
                 return (
                     <div className="flex gap-2">
-                        <div className="rounded-full bg-[#353C4A] border border-[1px solid #353C4A] cursor-pointer">
+                        <div className="rounded-full bg-[#353C4A] border border-[1px solid #353C4A] cursor-pointer hover:bg-[#0D1117]">
                             <img className="p-2" src={editIcon}></img>
                         </div>
-                        <div className="rounded-full bg-[#353C4A] border border-[1px solid #353C4A] cursor-pointer">
+                        <div className="rounded-full bg-[#353C4A] border border-[1px solid #353C4A] cursor-pointer hover:bg-[#0D1117]">
                             <img className="p-2" src={deleteIcon} onClick={() => handleRowDelete(row.index)}></img>
                         </div>
                     </div>
@@ -93,10 +120,17 @@ const DataTable = () => {
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
+        onSortingChange: setSorting,
+        getSortedRowModel: getSortedRowModel(),
+        state: {
+            sorting,
+        },
     })
     
     return (
-        <div className="w-full min-h-screen flex justify-center bg-[#151A24] shadow-md">
+        <>  
+            <TableActions table={table}/>
+            <div className="w-full min-h-screen flex justify-center bg-[#151A24] shadow-md">
             <div className="table-container w-full h-max flex justify-center items-center">
                 <div className="rounded-md w-10/12 h-max mt-10">
                     <Table className="border-none shadow-md">
@@ -149,7 +183,8 @@ const DataTable = () => {
                     </Table>
                 </div>
             </div>
-        </div>
+            </div>
+        </>
     )
 }
 
