@@ -10,7 +10,8 @@ import {
     flexRender,
     getCoreRowModel,
     useReactTable,
-    getSortedRowModel
+    getSortedRowModel,
+    getFilteredRowModel,
   } from "@tanstack/react-table"
    
 import {
@@ -40,6 +41,7 @@ const DataTable = () => {
 
     const [data, setData] = useState(dataArray);
     const [sorting, setSorting] = useState([]);
+    const [columnFilters, setColumnFilters] = useState([]);
     
     function handleRowDelete(indexToRemove){
         setData(prevData => {
@@ -49,9 +51,6 @@ const DataTable = () => {
         });
     }
 
-    function handleDateSorting(){
-        console.log("dateSorting clicked")
-    }
     const columns =  useMemo(() => [
         {
             accessorKey: 'shortLink',
@@ -122,8 +121,10 @@ const DataTable = () => {
         getCoreRowModel: getCoreRowModel(),
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
+        onColumnFiltersChange: setColumnFilters,
         state: {
             sorting,
+            columnFilters,
         },
     })
     

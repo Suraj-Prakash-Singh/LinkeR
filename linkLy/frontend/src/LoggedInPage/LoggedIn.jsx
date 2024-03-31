@@ -12,7 +12,8 @@ const LoggedIn = () => {
             <div className="w-full h-1/4 pb-10">
                 <div className="w-full h-auto flex mt-4 items-center gap-5">
                     <h2 className="navHeading p-2 cursor-pointer items-center justify-center w-2/12 ml-3">
-                    LinkeR</h2>
+                        LinkeR
+                    </h2>
                     <div className="w-7/12">
                         <InputBox width={"w-full"} height={"h-12"}></InputBox>
                     </div>
